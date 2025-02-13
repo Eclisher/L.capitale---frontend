@@ -1,0 +1,9 @@
+.about {
+    text-align: center;
+    padding: 50px;
+    background: linear-gradient(to right, #f3f4f6, #e5e7eb);
+    color: #333;
+    font-size: 1.2rem;
+    border-radius: 15px;
+  }
+  

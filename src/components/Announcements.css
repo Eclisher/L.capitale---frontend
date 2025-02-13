@@ -1,0 +1,20 @@
+.announcements {
+    text-align: center;
+    padding: 40px;
+    background-color: #f9f9f9;
+  }
+  
+  .announcement-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+  
+  .announcement-list li {
+    background-color: #e2e8f0;
+    padding: 10px;
+    margin: 8px auto;
+    border-radius: 8px;
+    width: 50%;
+  }
+  

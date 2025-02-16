@@ -1,4 +1,5 @@
 /* Centrage de la page d'accueil */
+
 .home {
   font-family: 'Arial', sans-serif;
   color: #333;
@@ -10,11 +11,14 @@
   min-height: calc(100vh - 70px); /* Ajuste la hauteur en tenant compte de la Navbar */
   padding: 20px;
   margin-right: 5vh;
+  font-family: 'Poppins ', sans-serif;
+  position: relative;
+
 }
 
 /* Section d'en-tête (Hero) centrée */
 .hero-section {
-  background: linear-gradient(135deg, #ff8800, #ff5500);
+  background: linear-gradient(135deg, #000000,#ffe100);
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -48,13 +52,16 @@
 }
 
 .cta-button:hover {
-  background: #ff5500;
+  background: #ffe100;
   color: white;
   transform: translateY(-3px);
+  text-decoration: none;
 }
 
 /* Section des cartes centrée */
 .info-section {
+  display: flex;
+  flex-wrap: wrap;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -70,6 +77,7 @@
   border-radius: 15px;
   transition: transform 0.3s, box-shadow 0.3s;
   max-width: 300px;
+  cursor: pointer;
 }
 
 .card:hover {
@@ -80,8 +88,7 @@
 .card h2 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color: #ff5500;
-}
+  color:#80762a;
 
 .card p {
   font-size: 1rem;
@@ -100,4 +107,81 @@
 
 .footer p {
   margin: 0;
+}
+
+/* Section des annonces */
+.annonces-section {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.annonces-section h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  color:#80762a;
+}
+
+/* Grille des annonces */
+.annonces-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1rem;
+}
+
+/* Carte d'annonce */
+.annonce-card {
+  display: flex;
+  flex-direction: column;
+  text-decoration: none;
+  color: inherit;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.annonce-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Image d'annonce en background */
+.annonce-image {
+  width: 100%;
+  height: 200px;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Infos de l'annonce */
+.annonce-info {
+  padding: 1rem;
+}
+
+.annonce-info h3 {
+  font-size: 1.2rem;
+  color: #ffe100;
+  margin-bottom: 0.5rem;
+}
+
+.annonce-info p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* Responsive pour affichage vertical */
+@media (max-width: 768px) {
+  .info-section {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Responsive pour alignement vertical des annonces */
+@media (max-width: 768px) {
+  .annonces-grid {
+    grid-template-columns: 1fr;
+  }
 }

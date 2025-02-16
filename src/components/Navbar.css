@@ -1,105 +1,166 @@
 /* Style général */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2c3e50;
-    color: white;
-    padding: 15px 20px;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .blog-title {
-    font-size: 24px;
-    font-weight: bold;
-  }
-  
-  /* Menu principal */
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #f4f4f4;
+
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #000f1f;
+  color: white;
+  padding: 15px 20px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background 0.3s ease-in-out;
+}
+
+/* Logo + Titre */
+.logo-title {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  font-family: cursive;
+}
+
+.logo {
+  width: 60px;
+  height: 60px;
+  margin-right: 10px;
+}
+
+.blog-title {
+  font-size: 24px;
+  font-weight: bold;
+  letter-spacing: 3px;
+  color: white;
+  transition: color 0.3s;
+}
+
+.blog-title:hover {
+  color: #f1c40f;
+
+}
+
+/* Menu principal */
+.menu {
+  display: flex;
+  align-items: center;
+}
+
+.menu ul {
+  display: flex;
+  list-style: none;
+}
+
+.menu ul li {
+  margin: 0 15px;
+  font-size: 16px;
+  font-weight: 500;
+  transition: transform 0.2s, color 0.3s;
+}
+
+.menu ul li a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  transition: color 0.3s;
+  padding: 8px 12px;
+  border-radius: 5px;
+}
+
+.menu ul li a:hover {
+  color: #f1c40f;
+  background: rgb(255, 255, 255);
+  transform: translateY(-3px);
+}
+
+/* Icônes des menus */
+.menu-icon {
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+/* Bouton Login */
+.login-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #3498db;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-size: 16px;
+}
+
+.login-button:hover {
+  background-color: #2980b9;
+  transform: scale(1.05);
+}
+
+.login-icon {
+  font-size: 18px;
+}
+
+/* Bouton menu hamburger */
+.menu-button {
+  display: none;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+/* Mode responsive */
+@media (max-width: 768px) {
   .menu {
-    display: flex;
-    align-items: center;
-    list-style: none;
+    flex-direction: column;
+    background-color: #2c3e50;
+    position: fixed;
+    top: 0;
+    left: -250px; /* Caché à gauche */
+    width: 250px;
+    height: 100vh;
+    padding-top: 60px;
+    transition: left 0.3s ease-in-out;
   }
 
-  
+  .menu.open {
+    left: 0; /* Glisse vers la droite */
+  }
+
   .menu ul {
-    display: flex;
-    list-style: none;
+    flex-direction: column;
+    align-items: start;
+    padding-left: 20px;
   }
-  
+
   .menu ul li {
-    margin: 0 15px;
-    cursor: pointer;
-    font-size: 16px;
-    transition: color 0.3s;
+    margin: 15px 0;
   }
-  
-  .menu ul li:hover {
-    color: #f1c40f;
-  }
-  
-  .login-button {
-    background-color: #3498db;
-    color: white;
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%; /* Le bouton occupera 100% de la largeur de son conteneur */
-    max-width: 250px; /* Largeur maximale pour éviter qu'il devienne trop grand */
-    margin-right: 5vh;
-  }
-  
-  /* Menu responsive */
+
   .menu-button {
+    display: block;
+  }
+
+  /* Cacher les textes et ne garder que les icônes */
+  .menu-text {
     display: none;
-    background: none;
-    border: none;
-    color: white;
-    font-size: 24px;
-    cursor: pointer;
   }
-  
-  @media (max-width: 768px) {
-    .menu {
-      display: none;
-      flex-direction: column;
-      background-color: #2c3e50;
-      position: absolute;
-      top: 100%;
-      right: 0;
-      width: 100%;
-      padding: 10px 0;
-    }
-  
-    .menu.open {
-      display: flex;
-    }
-  
-    .menu ul {
-      flex-direction: column;
-      align-items: center;
-    }
-  
-    .menu ul li {
-      margin: 10px 0;
-    }
-  
-    .menu-button {
-      display: block;
-    }
-  }
-  
+}

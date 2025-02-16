@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from '../firebase/FirebaseConfig';
 import { useNavigate } from 'react-router-dom';
-import './LoginPage.css'; // Import du fichier CSS
+import './LoginPage.css'; 
+import { FcGoogle } from "react-icons/fc"; 
 
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -31,6 +32,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
+      <div className="login-overlay"></div> 
       <div className="login-card">
         <h2 className="login-title">Admin Login</h2>
         <form onSubmit={handleLogin}>
@@ -54,14 +56,19 @@ const LoginPage = () => {
               required
             />
           </div>
+  
           {error && <p className="error-text">{error}</p>}
-          <button className="login-button" type="submit">
-            Login
-          </button>
+          
+          {/* Conteneur des boutons pour les centrer */}
+          <div className="button-container">
+            <button className="login-button" type="submit">
+              Login
+            </button>
+            <button className="google-login-button" onClick={handleGoogleLogin}>
+            <FcGoogle className="google-icon" />  Login with Google    
+            </button>
+          </div>
         </form>
-        <button className="google-login-button" onClick={handleGoogleLogin}>
-          Login with Google
-        </button>
       </div>
     </div>
   );

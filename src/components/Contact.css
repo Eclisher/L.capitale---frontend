@@ -1,38 +1,108 @@
-.contact {
-    padding: 40px;
-    text-align: center;
-    background-color: #f1f5f9;
-    border-radius: 10px;
+/* Conteneur principal qui prend toute la hauteur de l'écran */
+.contact-container {
+  position: fixed; /* Fixé pour couvrir tout l'écran */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: url("../assets/background1.jpg") no-repeat center center/cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 6vh;
+}
+
+/* Overlay sombre pour améliorer la lisibilité */
+.contact-overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px); /* Effet flou */
+}
+
+/* Conteneur du formulaire */
+.contact-content {
+  position: relative;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 50px;
+  border-radius: 12px;
+  text-align: center;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Titre */
+.contact-content h1 {
+  font-size: 32px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Texte sous le titre */
+.contact-content p {
+  color: #444;
+  font-size: 18px;
+  margin-bottom: 25px;
+}
+
+/* Champs de saisie */
+.contact-form input,
+.contact-form textarea {
+  width: 100%;
+  padding: 15px;
+  margin-top: 8px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 18px;
+}
+
+/* Champ texte */
+.contact-form textarea {
+  height: 150px;
+  resize: none;
+}
+
+/* Bouton stylisé */
+.contact-form button {
+  width: 100%;
+  padding: 15px;
+  background: #4f46e5;
+  color: white;
+  font-size: 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+  margin-top: 15px;
+}
+
+/* Animation du bouton au survol */
+.contact-form button:hover {
+  background: #3b32c1;
+  transform: scale(1.05);
+}
+
+/* Adaptation pour petits écrans */
+@media (max-width: 600px) {
+  .contact-content {
+    width: 90%;
+    padding: 30px;
   }
-  
-  .contact-form {
-    margin-top: 20px;
+
+  .contact-content h1 {
+    font-size: 28px;
   }
-  
-  .contact-form label {
-    display: block;
-    margin-bottom: 15px;
-  }
-  
+
   .contact-form input,
   .contact-form textarea {
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #d1d5db;
-    border-radius: 5px;
+    font-size: 16px;
+    padding: 12px;
   }
-  
+
   .contact-form button {
-    background-color: #4f46e5;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
+    font-size: 18px;
+    padding: 12px;
   }
-  
-  .contact-form button:hover {
-    background-color: #4338ca;
-  }
-  
+}

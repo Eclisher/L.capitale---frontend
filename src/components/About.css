@@ -1,9 +1,120 @@
+/* Arrière-plan avec image */
 .about {
-    text-align: center;
-    padding: 50px;
-    background: linear-gradient(to right, #f3f4f6, #e5e7eb);
-    color: #333;
-    font-size: 1.2rem;
-    border-radius: 15px;
+  position: relative;
+  text-align: center;
+  padding: 80px 20px;
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Overlay sombre */
+.about-overlay {
+  background: rgba(0, 0, 0, 0.7);
+  padding: 50px;
+  border-radius: 15px;
+  color: white;
+  max-width: 1000px;
+  width: 90%;
+  text-align: center;
+}
+
+/* Titre principal */
+.about-title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* Texte */
+.about-text {
+  font-size: 1.2rem;
+  margin-bottom: 15px;
+  line-height: 1.6;
+}
+
+/* Section des images décoratives */
+.about-images {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.about-img {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  transition: transform 0.3s ease-in-out;
+}
+
+.about-img:hover {
+  transform: scale(1.1);
+}
+
+/* Cartes interactives */
+.about-cards {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-top: 30px;
+  flex-wrap: wrap;
+}
+
+.about-card {
+  background: white;
+  color: #333;
+  padding: 20px;
+  border-radius: 10px;
+  width: 280px;
+  text-align: center;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+.about-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Images dans les cartes */
+.card-img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .about {
+    padding: 50px 10px;
   }
-  
+
+  .about-title {
+    font-size: 2.5rem;
+  }
+
+  .about-images {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .about-img {
+    width: 100px;
+    height: 100px;
+  }
+
+  .about-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+}

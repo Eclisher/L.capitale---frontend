@@ -9,42 +9,45 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
+
     if (!name.trim() || !message.trim()) {
       alert("Veuillez remplir tous les champs.");
       return;
     }
-  
+
     addMessage(name, message);
     setName("");
     setMessage("");
     alert("Votre message a été envoyé avec succès !");
   };
-  
 
   return (
-    <div className="contact">
-      <h1>Contactez-nous</h1>
-      <form className="contact-form" onSubmit={handleSubmit}>
-        <label>
-          Nom :
+    <div className="contact-container">
+      <div className="contact-overlay"></div>
+
+      <div className="contact-content">
+        <h1>Contactez-nous</h1>
+        <p>Nous serons ravis de vous entendre !</p>
+
+        <form className="contact-form" onSubmit={handleSubmit}>
+          <label>Nom :</label>
           <input
             type="text"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Entrez votre nom"
           />
-        </label>
-        <label>
-          Message :
+
+          <label>Message :</label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             placeholder="Votre message ici..."
           ></textarea>
-        </label>
-        <button type="submit">Envoyer</button>
-      </form>
+
+          <button type="submit">Envoyer</button>
+        </form>
+      </div>
     </div>
   );
 };

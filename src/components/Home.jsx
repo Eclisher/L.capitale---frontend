@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/annonces")
+      .get("http://localhost:8080/annonces")
       .then((response) => {
         setAnnonces(response.data);
       })
@@ -18,28 +18,43 @@ const Home = () => {
       });
   }, []);
 
+  const getGoogleDriveImageUrl = (fileId) => {
+    return `https://lh3.googleusercontent.com/d/${fileId}`;
+  };
+
   return (
     <div className="home">
-      {/* Section d'en-tête */}
       <header className="hero-section">
-        <h1>Bienvenue sur L. Capital</h1>
+        <h1>Bienvenue sur L.Capital</h1>
         <p>Découvrez des annonces passionnantes et des actualités captivantes.</p>
         <button className="cta-button">
           <Link to="/announcements">Explorez Maintenant</Link>
         </button>
       </header>
-    {/***Code couleur: Noiree, Jaune, Blanc  */}
 
-      {/* Section des annonces */}
       <section className="annonces-section">
         <h2>Dernières annonces</h2>
         <div className="annonces-grid">
           {annonces.map((annonce) => (
             <Link to={`/annonce/${annonce.id}`} key={annonce.id} className="annonce-card">
-              <div
-                className="annonce-image"
-                style={{ backgroundImage: `url(${annonce.image})` }}
-              ></div>
+              <div className="annonce-images">
+                {annonce.imageUrls && annonce.imageUrls.length > 0 ? (
+                  annonce.imageUrls.map((fileId, index) => (
+                    <img
+                      key={index}
+                      src={getGoogleDriveImageUrl(fileId)}
+                      alt={`Image ${index + 1} de ${annonce.titre}`}
+                      className="annonce-image"
+                    />
+                  ))
+                ) : (
+                  <img
+                    src="/default-image.jpg"
+                    alt="Image par défaut"
+                    className="annonce-image"
+                  />
+                )}
+              </div>
               <div className="annonce-info">
                 <h3>{annonce.titre}</h3>
                 <p>{annonce.description.substring(0, 80)}...</p>
@@ -49,7 +64,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Section des cartes informatives */}
       <section className="info-section">
         <div className="card" onClick={() => navigate("/announcements")}>
           <h2>Annonces</h2>
@@ -65,10 +79,8 @@ const Home = () => {
         </div>
       </section>
 
-
-      {/* Pied de page */}
       <footer className="footer">
-        <p>&copy; 2025 L. Capitale - Tous droits réservés.</p>
+        <p>&copy; 2025 L. Capital - Tous droits réservés.</p>
       </footer>
     </div>
   );

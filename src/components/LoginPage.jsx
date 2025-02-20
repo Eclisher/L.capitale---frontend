@@ -61,7 +61,7 @@ const LoginPage = () => {
           
           {/* Conteneur des boutons pour les centrer */}
           <div className="button-container">
-            <button className="login-button" type="submit">
+            <button className="login" type="submit">
               Login
             </button>
             <button className="google-login-button" onClick={handleGoogleLogin}>

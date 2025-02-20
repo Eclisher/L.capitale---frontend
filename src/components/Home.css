@@ -1,7 +1,6 @@
 /* Centrage de la page d'accueil */
-
 .home {
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
   color: #333;
   background-color: #f9f9f9;
   display: flex;
@@ -11,14 +10,13 @@
   min-height: calc(100vh - 70px); /* Ajuste la hauteur en tenant compte de la Navbar */
   padding: 20px;
   margin-right: 5vh;
-  font-family: 'Poppins ', sans-serif;
   position: relative;
-
+  margin-left: 23vh;
 }
 
 /* Section d'en-tête (Hero) centrée */
 .hero-section {
-  background: linear-gradient(135deg, #000000,#ffe100);
+  background: linear-gradient(135deg, #000000, #ffe100);
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -27,6 +25,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  width: 100%;
 }
 
 .hero-section h1 {
@@ -62,11 +61,10 @@
 .info-section {
   display: flex;
   flex-wrap: wrap;
-  display: flex;
-  flex-wrap: wrap;
   justify-content: center;
   gap: 2rem;
   padding: 3rem 2rem;
+  width: 100%;
 }
 
 .card {
@@ -88,7 +86,8 @@
 .card h2 {
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
-  color:#80762a;
+  color: #80762a;
+}
 
 .card p {
   font-size: 1rem;
@@ -103,6 +102,7 @@
   padding: 1rem 0;
   margin-top: 3rem;
   border-radius: 50px 50px 0 0;
+  width: 100%;
 }
 
 .footer p {
@@ -118,57 +118,100 @@
 }
 
 .annonces-section h2 {
-  font-size: 2rem;
+  font-size: 2.2rem;
   margin-bottom: 1.5rem;
-  color:#80762a;
+  color: #dab510;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 3px solid #30190d;
+  padding-bottom: 10px;
+  display: inline-block;
 }
 
 /* Grille des annonces */
 .annonces-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(4, 1fr); /* 4 annonces sur PC */
   gap: 1rem;
+  overflow-x: auto; /* Défilement horizontal sur mobile */
+  padding-bottom: 1rem; /* Espace pour le défilement */
 }
 
-/* Carte d'annonce */
 .annonce-card {
   display: flex;
   flex-direction: column;
   text-decoration: none;
   color: inherit;
   background: white;
-  border-radius: 10px;
+  border-radius: 12px;
   overflow: hidden;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  position: relative;
+  height: 320px; /* Légèrement plus grand */
+  border: 2px solid transparent;
 }
-
 .annonce-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  transform: scale(1.03);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  border-color: #ffcc00;
 }
 
 /* Image d'annonce en background */
-.annonce-image {
+.annonce-background {
   width: 100%;
-  height: 200px;
+  height: 100%;
   background-size: cover;
   background-position: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
-/* Infos de l'annonce */
-.annonce-info {
+/* Contenu superposé sur l'image */
+.annonce-content {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
   padding: 1rem;
+  background: rgba(0, 0, 0, 0.6); /* Fond semi-transparent */
+  color: white;
+  z-index: 2;
+}
+.annonce-content h3 {
+  font-size: 1.6rem;
+  font-weight: bold;
+  background: linear-gradient(45deg, #ffcc00, #ff6600);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 5px rgba(255, 165, 0, 0.5);
+  transition: transform 0.3s ease-in-out, text-shadow 0.3s ease-in-out;
 }
 
-.annonce-info h3 {
-  font-size: 1.2rem;
-  color: #ffe100;
-  margin-bottom: 0.5rem;
+
+.annonce-content p {
+  font-size: 1rem;
+  margin: 0.5rem 0 0;
+  color: white;
 }
 
-.annonce-info p {
+.annonce-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.5rem 1rem;
+  background-color: #ff5500;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
   font-size: 0.9rem;
-  color: #666;
+  transition: background-color 0.3s;
+}
+
+.annonce-link:hover {
+  background-color: #e94e00;
 }
 
 /* Responsive pour affichage vertical */
@@ -177,11 +220,17 @@
     flex-direction: column;
     align-items: center;
   }
-}
+  .home {
+    margin-left: 0; 
+    margin-right: 0;
+  }
 
-/* Responsive pour alignement vertical des annonces */
-@media (max-width: 768px) {
   .annonces-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(1, 1fr); /* 1 annonce sur mobile */
+    gap: 10px;
+  }
+
+  .annonce-card {
+    height: 200px; /* Hauteur réduite pour mobile */
   }
 }

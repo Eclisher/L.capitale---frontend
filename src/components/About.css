@@ -9,6 +9,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 25vh;
 }
 
 /* Overlay sombre */
@@ -97,6 +98,7 @@
 @media (max-width: 768px) {
   .about {
     padding: 50px 10px;
+    margin: 0 auto;
   }
 
   .about-title {

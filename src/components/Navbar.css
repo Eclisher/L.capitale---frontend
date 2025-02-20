@@ -98,18 +98,17 @@ body {
   display: flex;
   align-items: center;
   gap: 8px;
-  background-color: #3498db;
+  background-color:#000f1f;
   color: white;
   padding: 8px 16px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
-  font-size: 16px;
+  font-size: 22px;
 }
 
 .login-button:hover {
-  background-color: #2980b9;
   transform: scale(1.05);
 }
 
@@ -123,10 +122,10 @@ body {
   background: none;
   border: none;
   color: white;
-  font-size: 24px;
+  font-size: 25px;
   cursor: pointer;
+  padding-top: 2.5vh;
 }
-
 /* Mode responsive */
 @media (max-width: 768px) {
   .menu {
@@ -161,6 +160,25 @@ body {
 
   /* Cacher les textes et ne garder que les icônes */
   .menu-text {
+    display: none;
+  }
+
+  /* Réduction de la taille du titre en version mobile */
+  .blog-title {
+    font-size: 18px;
+    letter-spacing: 1.5px;
+  }
+
+  /* Afficher seulement l'icône du bouton Login en version mobile */
+  .login-button {
+    padding: 8px;
+    gap: 0;
+    width: 40px;
+    height: 40px;
+    justify-content: center;
+  }
+
+  .login-button span {
     display: none;
   }
 }

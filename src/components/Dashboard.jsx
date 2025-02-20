@@ -1,138 +1,124 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { FaPhone, FaEnvelope, FaCalendarAlt, FaImage, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import "./Dashboard.css";
 
-const AdminDashboard = () => {
-    const [annonces, setAnnonces] = useState([]);
+const AddAnnonce = () => {
     const [formData, setFormData] = useState({
-        id: null,
         titre: "",
         description: "",
-        image: null, // Image à uploader
+        dateAnnonce: "",
+        disponible: true,
         numeroTelephone: "",
-        email: "", // Ajout de l'email
+        email: "",
+        images: []
     });
-    const [isEditing, setIsEditing] = useState(false);
+
+    const [annonces, setAnnonces] = useState([]);
 
     useEffect(() => {
         fetchAnnonces();
     }, []);
 
-    function fetchAnnonces() {
+    const fetchAnnonces = () => {
         axios.get("http://localhost:8080/annonces")
-            .then(response => {
-                setAnnonces(response.data);
-            })
-            .catch(error => {
-                console.error("Erreur lors de la récupération des annonces :", error);
-            });
-    }
+            .then(response => setAnnonces(response.data))
+            .catch(error => console.error("Erreur lors de la récupération des annonces :", error));
+    };
 
-    function handleInputChange(e) {
+    const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
-    }
+    };
 
-    function handleImageChange(e) {
-        setFormData(prev => ({ ...prev, image: e.target.files[0] }));
-    }
+    const handleFileChange = (e) => {
+        setFormData(prev => ({ ...prev, images: Array.from(e.target.files) }));
+    };
 
-    function handleSubmit(e) {
+    const handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
         data.append("titre", formData.titre);
         data.append("description", formData.description);
+        data.append("dateAnnonce", formData.dateAnnonce);
+        data.append("disponible", formData.disponible);
         data.append("numeroTelephone", formData.numeroTelephone);
-        data.append("email", formData.email); // Ajout de l'email
-        if (formData.image) data.append("image", formData.image);
-
-        if (isEditing) {
-            axios.put(`http://localhost:8080/annonces/${formData.id}`, data)
-                .then(() => {
-                    fetchAnnonces();
-                    resetForm();
-                })
-                .catch(error => console.error("Erreur lors de la mise à jour :", error));
-        } else {
-            axios.post("http://localhost:8080/annonces", data)
-                .then(() => {
-                    fetchAnnonces();
-                    resetForm();
-                })
-                .catch(error => console.error("Erreur lors de l'ajout :", error));
-        }
-    }
-
-    function resetForm() {
-        setFormData({ id: null, titre: "", description: "", image: null, numeroTelephone: "", email: "" });
-        setIsEditing(false);
-    }
-
-    function handleEdit(annonce) {
-        setFormData({
-            id: annonce.id,
-            titre: annonce.titre,
-            description: annonce.description,
-            numeroTelephone: annonce.numeroTelephone || "",
-            email: annonce.email || "", // Ajout de l'email
+        data.append("email", formData.email);
+        formData.images.forEach((image) => {
+            data.append("images", image);
         });
-        setIsEditing(true);
-    }
 
-    function handleDelete(id) {
-        axios.delete(`http://localhost:8080/annonces/${id}`)
+        axios.post("http://localhost:8080/annonces", data, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        })
             .then(() => {
-                setAnnonces(annonces.filter(annonce => annonce.id !== id));
+                fetchAnnonces();
+                setFormData({ titre: "", description: "", dateAnnonce: "", disponible: true, numeroTelephone: "", email: "", images: [] });
             })
-            .catch(error => console.error("Erreur lors de la suppression :", error));
-    }
+            .catch(error => console.error("Erreur lors de l'ajout :", error));
+    };
+
+    const getGoogleDriveImageUrl = (fileId) => {
+        return `https://lh3.googleusercontent.com/d/${fileId}`;
+    };
 
     return (
-        <div className="p-6">
-            <h1 className="text-2xl font-bold mb-4">Tableau de Bord Admin</h1>
-
-            {/* Formulaire d'ajout / édition */}
-            <form onSubmit={handleSubmit} className="mb-6 p-4 border rounded shadow">
-                <h2 className="text-xl font-semibold mb-2">
-                    {isEditing ? "Modifier l'Annonce" : "Ajouter une Annonce"}
-                </h2>
-                <input type="text" name="titre" placeholder="Titre" value={formData.titre}
-                       onChange={handleInputChange} className="w-full p-2 border mb-2" required />
-                <textarea name="description" placeholder="Description" value={formData.description}
-                          onChange={handleInputChange} className="w-full p-2 border mb-2" required />
-                <input type="tel" name="numeroTelephone" placeholder="Téléphone"
-                       value={formData.numeroTelephone} onChange={handleInputChange}
-                       className="w-full p-2 border mb-2" />
-                <input type="email" name="email" placeholder="Email"
-                       value={formData.email} onChange={handleInputChange}
-                       className="w-full p-2 border mb-2" required /> {/* Ajout du champ email */}
-                <input type="file" onChange={handleImageChange} className="mb-2" />
-                <button type="submit"
-                        className={`px-4 py-2 text-white rounded ${isEditing ? "bg-blue-500" : "bg-green-500"}`}>
-                    {isEditing ? "Modifier" : "Ajouter"}
-                </button>
+        <div className="container">
+            <h1 className="title">Ajouter une Annonce</h1>
+            <form onSubmit={handleSubmit} className="form-container">
+                <input type="text" name="titre" placeholder="Titre" value={formData.titre} onChange={handleInputChange} required />
+                <textarea name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} required />
+                <input type="date" name="dateAnnonce" value={formData.dateAnnonce} onChange={handleInputChange} required />
+                <select name="disponible" value={formData.disponible} onChange={handleInputChange} required>
+                    <option value={true}>Disponible</option>
+                    <option value={false}>Non disponible</option>
+                </select>
+                <input type="tel" name="numeroTelephone" placeholder="Téléphone" value={formData.numeroTelephone} onChange={handleInputChange} required />
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleInputChange} required />
+                <input type="file" multiple onChange={handleFileChange} required />
+                <button type="submit" className="btn add-btn">Ajouter</button>
             </form>
-
-            {/* Liste des annonces */}
-            <div className="grid grid-cols-3 gap-4">
-                {annonces.map((annonce, index) => (
-                    <div key={index} className="border p-4 rounded-lg shadow">
-                        <h2 className="text-xl font-semibold">{annonce.titre}</h2>
-                        <p>{annonce.description}</p>
-                        {annonce.imageUrl && (
-                            <img src={`http://localhost:8080/${annonce.imageUrl}`} alt="Annonce"
-                                 className="mt-2 w-full h-40 object-cover rounded"/>
-                        )}
-                        <p className="text-sm text-gray-600 mt-2">Contact : {annonce.numeroTelephone || "N/A"}</p>
-                        <p className="text-sm text-gray-600 mt-1">Email : {annonce.email || "N/A"}</p> {/* Affichage de l'email */}
-                        <div className="mt-2">
-                            <button className="px-3 py-1 bg-yellow-500 text-white rounded mr-2"
-                                    onClick={() => handleEdit(annonce)}>
-                                Modifier
-                            </button>
-                            <button className="px-3 py-1 bg-red-500 text-white rounded"
-                                    onClick={() => handleDelete(annonce.id)}>
-                                Supprimer
-                            </button>
+            <h2 className="title">Annonces Existantes</h2>
+            <div className="annonce-grid">
+                {annonces.map((annonce) => (
+                    <div key={annonce.id} className="annonce-card">
+                        <h3>{annonce.titre}</h3>
+                        <p className="annonce-date">
+                            <FaCalendarAlt className="icon" /> Publié le : {annonce.dateAnnonce}
+                        </p>
+                        <p className={`badge ${annonce.disponible ? "disponible" : "indisponible"}`}>
+                            {annonce.disponible ? (
+                                <><FaCheckCircle className="icon" /> Disponible</>
+                            ) : (
+                                <><FaTimesCircle className="icon" /> Indisponible</>
+                            )}
+                        </p>
+                        <div className="image-gallery">
+                            {annonce.imageUrls?.length > 0 ? (
+                                annonce.imageUrls.map((fileId, index) => (
+                                    <img
+                                        key={index}
+                                        src={getGoogleDriveImageUrl(fileId)}
+                                        alt={`Image ${index + 1}`}
+                                        className="annonce-image"
+                                    />
+                                ))
+                            ) : (
+                                <p className="no-images">
+                                    <FaImage className="icon" /> Aucune image disponible
+                                </p>
+                            )}
+                        </div>
+                        <p className="annonce-description">{annonce.description}</p>
+                        <div className="contact-info">
+                            <p>
+                                <FaPhone className="icon" /> <strong>Téléphone :</strong> {annonce.numeroTelephone || "Non renseigné"}
+                            </p>
+                            <p>
+                                <FaEnvelope className="icon" /> <strong>Email :</strong> {annonce.email || "Non renseigné"}
+                            </p>
                         </div>
                     </div>
                 ))}
@@ -141,4 +127,4 @@ const AdminDashboard = () => {
     );
 };
 
-export default AdminDashboard;
+export default AddAnnonce;

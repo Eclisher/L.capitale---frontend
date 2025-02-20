@@ -1,20 +1,122 @@
-.announcements {
-    text-align: center;
-    padding: 40px;
-    background-color: #f9f9f9;
+.all-annonces-container {
+  max-width: 1200px;
+  margin: 12vh auto; /* Centrer horizontalement et ajouter un espace en haut */
+  padding: 20px;
+  margin-left: 50vh;
+  background-color: #fff;
+  color: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer le contenu à l'intérieur */
+}
+
+
+.title {
+  text-align: center;
+  color: #917a32;
+  margin-bottom: 20px;
+}
+
+.annonces-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.annonce-card {
+  background-color: #000;
+  color: #725d0f;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: auto;
+  min-height: 300px; /* Ajustez selon besoin */
+  overflow: visible; /* S'assurer que tout est affiché */
+}
+
+.annonce-title {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #7a6d27;
+}
+
+.annonce-date {
+  font-size: 0.9rem;
+  color: #5a6119;
+}
+
+.image-gallery {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 10px;
+  max-height: 300px; /* Ajustez si besoin */
+  overflow: hidden;
+}
+
+.annonce-image {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  border-radius: 5px;
+  border: 2px solid #efe1e1;
+}
+
+.no-images {
+  color: #fff;
+  text-align: center;
+  font-size: 0.9rem;
+}
+
+.annonce-description {
+  flex-grow: 1; /* Permet à la description de remplir l'espace */
+  font-size: 1rem;
+  margin-top: 10px;
+  white-space: pre-wrap;
+}
+
+/* Badge de disponibilité */
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  text-align: center;
+  width: fit-content;
+  margin-bottom: 10px;
+}
+
+.disponible {
+  background-color: #28a745;
+  color: white;
+}
+
+.indisponible {
+  background-color: #dc3545;
+  color: white;
+}
+
+.contact-info {
+  margin-top: 15px;
+  font-size: 0.9rem;
+}
+
+.contact-info p {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.icon {
+  color: #FFD700;
+}
+@media (max-width: 768px) { 
+  .all-annonces-container {
+    margin-left: auto;
+    margin-right: auto;
   }
-  
-  .announcement-list {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-  }
-  
-  .announcement-list li {
-    background-color: #e2e8f0;
-    padding: 10px;
-    margin: 8px auto;
-    border-radius: 8px;
-    width: 50%;
-  }
-  
+}

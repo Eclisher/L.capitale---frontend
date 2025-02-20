@@ -36,30 +36,26 @@ const Home = () => {
         <h2>Dernières annonces</h2>
         <div className="annonces-grid">
           {annonces.map((annonce) => (
-            <Link to={`/annonce/${annonce.id}`} key={annonce.id} className="annonce-card">
-              <div className="annonce-images">
-                {annonce.imageUrls && annonce.imageUrls.length > 0 ? (
-                  annonce.imageUrls.map((fileId, index) => (
-                    <img
-                      key={index}
-                      src={getGoogleDriveImageUrl(fileId)}
-                      alt={`Image ${index + 1} de ${annonce.titre}`}
-                      className="annonce-image"
-                    />
-                  ))
-                ) : (
-                  <img
-                    src="/default-image.jpg"
-                    alt="Image par défaut"
-                    className="annonce-image"
-                  />
-                )}
+            <div key={annonce.id} className="annonce-card">
+              <div
+                className="annonce-background"
+                style={{
+                  backgroundImage: `url(${
+                    annonce.imageUrls && annonce.imageUrls.length > 0
+                      ? getGoogleDriveImageUrl(annonce.imageUrls[0])
+                      : "/default-image.jpg"
+                  })`,
+                }}
+              >
+                <div className="annonce-content">
+                  <h3>{annonce.titre}</h3>
+                  <p>{annonce.description.substring(0, 80)}...</p>
+                  <Link to={`/annonce/${annonce.id}`} className="annonce-link">
+                    Voir plus
+                  </Link>
+                </div>
               </div>
-              <div className="annonce-info">
-                <h3>{annonce.titre}</h3>
-                <p>{annonce.description.substring(0, 80)}...</p>
-              </div>
-            </Link>
+            </div>
           ))}
         </div>
       </section>

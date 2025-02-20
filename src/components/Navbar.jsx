@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FaSignInAlt, FaHome, FaBullhorn, FaInfoCircle, FaEnvelope, FaBars } from "react-icons/fa"; // Import des icônes
+import { FaSignInAlt, FaHome, FaBullhorn, FaInfoCircle, FaEnvelope, FaBars } from "react-icons/fa";
+import { BiSolidGridAlt } from "react-icons/bi";
 import "./Navbar.css";
 import logo from "../assets/logo.png"; 
 
@@ -24,11 +25,11 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="logo-title" onClick={handleTitleClick}>
         <img src={logo} alt="Logo" className="logo" />
-        <h1 className="blog-title"> L. Capital</h1>
+        <h1 className="blog-title">L. Capital</h1>
       </div>
 
       <button className="menu-button" onClick={toggleMenu}>
-        <FaBars />
+        <BiSolidGridAlt />
       </button>
 
       <div className={`menu ${isMenuOpen ? "open" : ""}`}>
@@ -41,7 +42,7 @@ const Navbar = () => {
       </div>
 
       <button className="login-button" onClick={handleLoginClick}>
-        <FaSignInAlt className="login-icon" /> Login
+        <FaSignInAlt className="login-icon" /> <span>Login</span>
       </button>
     </nav>
   );

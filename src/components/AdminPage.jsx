@@ -6,13 +6,13 @@ const AdminPage = () => {
   const [newAnnonce, setNewAnnonce] = useState({ imageUrl: '', date: '', disponible: true, telephone: '', email: '' });
 
   useEffect(() => {
-    axios.get('http://localhost:8080/api/annonces')
+    axios.get(`${import.meta.env.VITE_API_BASE_URL}/annonces`)
       .then(response => setAnnonces(response.data))
       .catch(error => console.error("Erreur lors de la récupération des annonces", error));
   }, []);
 
   const handleAddAnnonce = () => {
-    axios.post('http://localhost:8080/api/annonces', newAnnonce)
+    axios.post(`${import.meta.env.VITE_API_BASE_URL}/api/annonces`, newAnnonce)
       .then(response => {
         setAnnonces([...annonces, response.data]);
         setNewAnnonce({ imageUrl: '', date: '', disponible: true, telephone: '', email: '' });

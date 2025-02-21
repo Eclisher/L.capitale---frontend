@@ -11,7 +11,7 @@ const AnnonceDetails = () => {
 
   useEffect(() => {
     axios
-      .get(`http://localhost:8080/annonces/${id}`)
+      .get(`${import.meta.env.VITE_API_BASE_URL}/annonces/${id}`)
       .then((response) => {
         setAnnonce(response.data);
         setLoading(false);

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { FaPhone, FaEnvelope, FaCalendarAlt, FaImage, FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { FaPhone, FaEnvelope, FaCalendarAlt, FaImage, FaCheckCircle, FaTimesCircle, FaEnvelopeOpenText } from "react-icons/fa";
 import "./Dashboard.css";
 
 const AddAnnonce = () => {
@@ -15,26 +15,84 @@ const AddAnnonce = () => {
     });
 
     const [annonces, setAnnonces] = useState([]);
+    const [messages, setMessages] = useState([]);
+    const [showMessages, setShowMessages] = useState(false);
+    const [successMessage, setSuccessMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
 
     useEffect(() => {
         fetchAnnonces();
+        fetchMessages();
     }, []);
 
     const fetchAnnonces = () => {
-        axios.get("http://localhost:8080/annonces")
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/annonces`)
             .then(response => setAnnonces(response.data))
             .catch(error => console.error("Erreur lors de la récupération des annonces :", error));
+    };
+
+    const fetchMessages = () => {
+        axios.get(`${import.meta.env.VITE_API_BASE_URL}/message`)
+            .then(response => {
+                console.log("Messages reçus :", response.data);
+                setMessages(response.data);
+            })
+            .catch(error => console.error("Erreur lors de la récupération des messages :", error));
     };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
     };
-
     const handleFileChange = (e) => {
-        setFormData(prev => ({ ...prev, images: Array.from(e.target.files) }));
+        const newFiles = Array.from(e.target.files);
+        if (newFiles.length > 5) {
+            alert("Vous ne pouvez télécharger que 5 images à la fois.");
+            return;
+        }
+        setFormData(prev => ({ ...prev, images: [...prev.images, ...newFiles] }));
     };
+    
 
+    const removeImage = (index) => {
+        setFormData(prev => {
+            const newImages = [...prev.images];
+            newImages.splice(index, 1);
+            return { ...prev, images: newImages };
+        });
+    };
+    const handleDeleteMessage = (id) => {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer ce message ?")) {
+            axios.delete(`${import.meta.env.VITE_API_BASE_URL}/${id}`)
+                .then(() => {
+                    setMessages(messages.filter(msg => msg.id !== id));
+                    setSuccessMessage("Message supprimé avec succès.");
+                    setErrorMessage("");
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la suppression :", error);
+                    setErrorMessage("Erreur lors de la suppression du message.");
+                    setSuccessMessage("");
+                });
+        }
+    };
+    
+    const handleDeleteAnnonce = (id) => {
+        if (window.confirm("Êtes-vous sûr de vouloir supprimer cette annonce ?")) {
+            axios.delete(`${import.meta.env.VITE_API_BASE_URL}/annonces/${id}`)
+                .then(() => {
+                    fetchAnnonces();
+                    setSuccessMessage("Annonce supprimée avec succès.");
+                    setErrorMessage("");
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la suppression :", error);
+                    setErrorMessage("Erreur lors de la suppression de l'annonce.");
+                    setSuccessMessage("");
+                });
+        }
+    };
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const data = new FormData();
@@ -48,7 +106,7 @@ const AddAnnonce = () => {
             data.append("images", image);
         });
 
-        axios.post("http://localhost:8080/annonces", data, {
+        axios.post(`${import.meta.env.VITE_API_BASE_URL}/annonces`, data, {
             headers: {
                 "Content-Type": "multipart/form-data"
             }
@@ -56,8 +114,14 @@ const AddAnnonce = () => {
             .then(() => {
                 fetchAnnonces();
                 setFormData({ titre: "", description: "", dateAnnonce: "", disponible: true, numeroTelephone: "", email: "", images: [] });
+                setSuccessMessage("Annonce ajoutée avec succès.");
+                setErrorMessage("");
             })
-            .catch(error => console.error("Erreur lors de l'ajout :", error));
+            .catch(error => {
+                console.error("Erreur lors de l'ajout :", error);
+                setErrorMessage("Erreur lors de l'ajout de l'annonce.");
+                setSuccessMessage("");
+            });
     };
 
     const getGoogleDriveImageUrl = (fileId) => {
@@ -66,7 +130,30 @@ const AddAnnonce = () => {
 
     return (
         <div className="container">
+            <div className="message-dropdown">
+                <button className="btn message-btn" onClick={() => setShowMessages(!showMessages)}>
+                    <FaEnvelopeOpenText className="icon" /> Messages Reçus
+                </button>
+                {showMessages && (
+                    <ul className="message-list">
+                        {messages.length > 0 ? (
+                            messages.map((msg, index) => (
+                                <li key={index} className="message-item">
+                                    <strong>{msg.name}</strong>: {msg.messageContext}
+                                    <button className="delete-btn" onClick={() => handleDeleteMessage(msg.id)}>
+                                        <FaTimesCircle className="icon" /> Supprimer
+                                    </button>
+                                </li>
+                            ))
+                        ) : (
+                            <li className="message-item">Aucun message reçu</li>
+                        )}
+                    </ul>
+                )}
+            </div>
             <h1 className="title">Ajouter une Annonce</h1>
+            {successMessage && <div className="success-message">{successMessage}</div>}
+            {errorMessage && <div className="error-message">{errorMessage}</div>}
             <form onSubmit={handleSubmit} className="form-container">
                 <input type="text" name="titre" placeholder="Titre" value={formData.titre} onChange={handleInputChange} required />
                 <textarea name="description" placeholder="Description" value={formData.description} onChange={handleInputChange} required />
@@ -77,6 +164,16 @@ const AddAnnonce = () => {
                 </select>
                 <input type="tel" name="numeroTelephone" placeholder="Téléphone" value={formData.numeroTelephone} onChange={handleInputChange} required />
                 <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleInputChange} required />
+                <div className="image-preview">
+                    {formData.images.map((image, index) => (
+                        <div key={index} className="image-item">
+                            <img src={URL.createObjectURL(image)} alt={`Image ${index + 1}`} />
+                            <button type="button" onClick={() => removeImage(index)}>
+                                <FaTimesCircle className="icon" /> Supprimer
+                            </button>
+                        </div>
+                    ))}
+                </div>
                 <input type="file" multiple onChange={handleFileChange} required />
                 <button type="submit" className="btn add-btn">Ajouter</button>
             </form>
@@ -99,11 +196,12 @@ const AddAnnonce = () => {
                             {annonce.imageUrls?.length > 0 ? (
                                 annonce.imageUrls.map((fileId, index) => (
                                     <img
-                                        key={index}
-                                        src={getGoogleDriveImageUrl(fileId)}
-                                        alt={`Image ${index + 1}`}
-                                        className="annonce-image"
-                                    />
+  key={index}
+  src={getGoogleDriveImageUrl(fileId)}
+  alt={`Image ${index + 1}`}
+  className="annonce-image"
+  loading="lazy"
+/>
                                 ))
                             ) : (
                                 <p className="no-images">
@@ -120,6 +218,9 @@ const AddAnnonce = () => {
                                 <FaEnvelope className="icon" /> <strong>Email :</strong> {annonce.email || "Non renseigné"}
                             </p>
                         </div>
+                        <button className="delete-btn" onClick={() => handleDeleteAnnonce(annonce.id)}>
+                            <FaTimesCircle className="icon" /> Supprimer
+                        </button>
                     </div>
                 ))}
             </div>

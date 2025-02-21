@@ -10,7 +10,7 @@ const AllAnnonces = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/annonces")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/annonces`)
       .then((response) => {
         console.log("Données reçues :", response.data);
         setAnnonces(response.data);

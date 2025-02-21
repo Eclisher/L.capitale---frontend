@@ -8,7 +8,7 @@ import Announcements from "./components/Annoucement";
 import About from "./components/About";
 import Contact from "./components/Contact";
 import Dashboard from "./components/Dashboard";
-import AnnonceDetails from "./components/AnnonceDetails"; // Import du nouveau composant
+import AnnonceDetails from "./components/AnnonceDetails"; 
 import { MessageProvider } from "./components/MessageContext";
 import "./App.css";
 
@@ -26,7 +26,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/annonce/:id" element={<AnnonceDetails />} /> {/* Nouvelle route */}
+            <Route path="/annonce/:id" element={<AnnonceDetails />} /> 
           </Routes>
         </div>
       </Router>

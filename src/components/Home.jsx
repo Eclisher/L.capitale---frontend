@@ -9,7 +9,7 @@ const Home = () => {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/annonces")
+      .get(`${import.meta.env.VITE_API_BASE_URL}/annonces`)
       .then((response) => {
         setAnnonces(response.data);
       })
@@ -25,8 +25,9 @@ const Home = () => {
   return (
     <div className="home">
       <header className="hero-section">
-        <h1>Bienvenue sur L.Capital</h1>
-        <p>Découvrez des annonces passionnantes et des actualités captivantes.</p>
+      {/**Bienvenue sur Liona capital, decouvrez les fonds de commerce à vendre à Madagascar en naviguant sur la plateforme */}
+        <h1>ienvenue sur Liona capital,</h1>
+        <p>decouvrez les fonds de commerce à vendre à Madagascar en naviguant sur la plateforme</p>
         <button className="cta-button">
           <Link to="/announcements">Explorez Maintenant</Link>
         </button>

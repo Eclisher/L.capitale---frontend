@@ -1,9 +1,79 @@
 
+/* Menu déroulant des messages */
+.message-dropdown {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.message-btn {
+  background-color: #ffffff;
+  padding: 10px;
+  color: rgb(0, 0, 0);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.message-btn:hover {
+  background-color: #05366a;
+}
+
+.delete-btn {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-left: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.delete-btn:hover {
+  background-color: darkred;
+}
+
+.message-list {
+  list-style: none;
+  max-height: 200px;
+  overflow-y: auto;
+  background: rgb(255, 255, 255);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color:rgb(87, 79, 33);
+}
+
+.message-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.message-item:last-child {
+  border-bottom: none;
+}
+
+.delete-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.delete-btn:hover {
+  background: darkred;
+}
 
 .container {
   margin-top: 15vh;
   max-width: 900px;
-
+  margin-left: 35vh;
   background: white;
   padding: 20px;
   border-radius: 8px;
@@ -101,4 +171,69 @@
   object-fit: cover;
   margin-top: 10px;
   border-radius: 5px;
+}
+/* Messages de succès et d'erreur */
+.success-message {
+  color: green;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.error-message {
+  color: red;
+  margin: 10px 0;
+  text-align: center;
+}
+
+/* Prévisualisation des images */
+.image-preview {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 10px 0;
+}
+
+.image-item {
+  position: relative;
+}
+
+.image-item img {
+  max-width: 100px;
+  max-height: 100px;
+  border-radius: 5px;
+}
+
+.image-item button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: rgba(255, 0, 0, 0.7);
+  border: none;
+  color: white;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+/* Bouton de suppression dans les annonces */
+.annonce-card .delete-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  margin-top: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+}
+
+.annonce-card .delete-btn:hover {
+  background: darkred;
+}
+@media (max-width: 768px) {
+  .container {
+    margin-left: 0 !important;
+    width: 100%;
+    margin: 15vh auto;
+  }
 }
